@@ -74,3 +74,34 @@ EduChain moves academic credentials **on-chain** — making them:
 ---
 
 ## Architecture
+
+┌─────────────────────────────────────────────────────────────┐
+│                        User Interfaces                       │
+│   Student Dashboard · Verify Page · Issue Page · Explorer   │
+└────────────────────────────┬────────────────────────────────┘
+│  React + Ethers.js
+┌────────────────────────────▼────────────────────────────────┐
+│                    Frontend (React + Vite)                   │
+│         MetaMask Wallet · QR Scanner · IPFS Upload          │
+└──────────────┬──────────────────────────┬───────────────────┘
+│ Direct RPC calls         │ REST API calls
+┌──────────────▼──────────┐  ┌────────────▼───────────────────┐
+│   Ethereum Blockchain   │  │     Backend (Node.js + Express) │
+│                         │  │                                 │
+│  ┌───────────────────┐  │  │  ┌──────────────────────────┐  │
+│  │  EduChain.sol     │  │  │  │  Event Sync Service      │  │
+│  │                   │  │  │  │  (listens to chain events│  │
+│  │  - issueCredential│◄─┼──┼──┤   caches in MongoDB)     │  │
+│  │  - verifyCredential│ │  │  └──────────────────────────┘  │
+│  │  - revokeCredential│ │  │                                 │
+│  │  - AccessControl  │  │  │  ┌──────────────────────────┐  │
+│  └───────────────────┘  │  │  │  MongoDB                 │  │
+│                         │  │  │  (off-chain cache for    │  │
+└─────────────────────────┘  │  │   fast API queries)      │  │
+│  └──────────────────────────┘  │
+│                                 │
+│  ┌──────────────────────────┐  │
+│  │  IPFS via Pinata         │  │
+│  │  (degree PDF storage)    │  │
+│  └──────────────────────────┘  │
+└─────────────────────────────────┘
