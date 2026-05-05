@@ -153,78 +153,36 @@ EduChain moves academic credentials **on-chain** — making them:
 ---
 
 ## Project Structure
-
 educhain/
-│
-├── blockchain/                    # Smart contracts
-│   ├── contracts/
-│   │   └── EduChain.sol           ← Main contract (AccessControl + Pausable)
-│   ├── scripts/
-│   │   └── deploy.js              ← Deployment + auto-verify on Etherscan
-│   ├── test/
-│   │   └── EduChain.test.js       ← 15 test cases (100% function coverage)
-│   ├── deployments/               ← Generated after deploy (gitignored)
-│   │   └── sepolia.json
-│   └── hardhat.config.js
-│
-├── backend/                       # REST API
-│   ├── server.js                  ← Express app entry point
-│   ├── config/
-│   │   └── db.js                  ← MongoDB connection
+├── blockchain/               # Smart contracts (Hardhat)
+│   ├── contracts/            # Main logic: AccessControl + Pausable
+│   ├── scripts/              # Deployment + Etherscan auto-verify
+│   ├── test/                 # 15 test cases (100% coverage)
+│   ├── deployments/          # Deployment artifacts (gitignored)
+│   └── hardhat.config.js     
+├── backend/                  # REST API (Express + MongoDB)
+│   ├── server.js             # Entry point
+│   ├── config/               # DB connections
 │   ├── src/
-│   │   ├── routes/
-│   │   │   ├── credentials.js     ← GET /api/credentials/:hash
-│   │   │   ├── institutions.js    ← GET /api/institutions/:address
-│   │   │   └── verify.js          ← GET /api/verify/:hash
-│   │   ├── models/
-│   │   │   ├── Credential.js      ← MongoDB schema (off-chain cache)
-│   │   │   └── Institution.js     ← MongoDB schema
-│   │   ├── middleware/
-│   │   │   ├── auth.js            ← MetaMask signature verification
-│   │   │   └── errorHandler.js    ← Global error handler
-│   │   └── utils/
-│   │       ├── blockchain.js      ← Ethers.js contract wrapper
-│   │       ├── ipfs.js            ← Pinata IPFS integration
-│   │       └── eventSync.js       ← Live + historical event indexer
+│   │   ├── routes/           # Credentials, Institutions, Verification
+│   │   ├── models/           # MongoDB schemas (off-chain cache)
+│   │   ├── middleware/       # MetaMask auth & error handling
+│   │   └── utils/            # IPFS, Ethers wrapper, Event indexer
 │   ├── Dockerfile
-│   ├── railway.json
-│   └── .env.example
-│
-├── frontend/                      # React application
+│   └── railway.json          # Backend deployment config
+├── frontend/                 # React application (Vite/CRA)
 │   ├── src/
-│   │   ├── pages/
-│   │   │   ├── Home.jsx           ← Landing page with live stats
-│   │   │   ├── Verify.jsx         ← Hash + QR code verification
-│   │   │   ├── Issue.jsx          ← Issue credentials + PDF upload
-│   │   │   ├── Dashboard.jsx      ← Student credential wallet
-│   │   │   ├── Explorer.jsx       ← Blockchain explorer + search
-│   │   │   └── Admin.jsx          ← Register/manage institutions
-│   │   ├── components/
-│   │   │   ├── common/
-│   │   │   │   ├── Navbar.jsx
-│   │   │   │   ├── Footer.jsx
-│   │   │   │   ├── LoadingSkeleton.jsx
-│   │   │   │   ├── EmptyState.jsx
-│   │   │   │   ├── StatusBadge.jsx
-│   │   │   │   └── PageHeader.jsx
-│   │   │   └── dashboard/
-│   │   │       └── CredentialCard.jsx
-│   │   ├── context/
-│   │   │   └── WalletContext.jsx  ← MetaMask state (account, chain, signer)
-│   │   ├── hooks/
-│   │   │   └── useContract.js     ← Smart contract interaction hook
-│   │   └── utils/
-│   │       └── seo.js             ← Dynamic meta tag management
+│   │   ├── pages/            # Home, Verify, Issue, Dashboard, Admin
+│   │   ├── components/       # Common UI & feature-specific modules
+│   │   ├── context/          # Wallet/MetaMask global state
+│   │   ├── hooks/            # useContract interaction logic
+│   │   └── utils/            # SEO & metadata management
 │   ├── public/
-│   │   └── favicon.svg
-│   ├── index.html                 ← Full SEO + Open Graph meta tags
-│   └── vercel.json                ← Vercel deployment config
-│
-├── docker-compose.yml             ← Full local stack (hardhat + mongo + api + frontend)
-├── DEPLOY.md                      ← Step-by-step deployment guide
-└── README.md                      ← This file
-
----
+│   ├── index.html            # SEO & Open Graph tags
+│   └── vercel.json           # Frontend deployment config
+├── docker-compose.yml        # Full local stack orchestration
+├── DEPLOY.md                 # Deployment guide
+└── README.md                 # Project documentation
 
 ## Quick Start (macOS)
 
