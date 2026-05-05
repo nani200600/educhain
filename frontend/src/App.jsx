@@ -8,6 +8,7 @@ import Verify    from "./pages/Verify";
 import Issue     from "./pages/Issue";
 import Dashboard from "./pages/Dashboard";
 import Explorer  from "./pages/Explorer";
+import Admin     from "./pages/Admin";
 
 export default function App() {
   return (
@@ -23,6 +24,7 @@ export default function App() {
               <Route path="/issue"        element={<Issue />} />
               <Route path="/dashboard"    element={<Dashboard />} />
               <Route path="/explorer"     element={<Explorer />} />
+              <Route path="/admin"        element={<Admin />} />
             </Routes>
           </main>
           <Footer />
