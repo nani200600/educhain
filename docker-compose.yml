@@ -1,0 +1,76 @@
+version: "3.9"
+
+services:
+
+  # Local Ethereum node
+  hardhat:
+    image: node:20-alpine
+    working_dir: /app
+    volumes:
+      - ./blockchain:/app
+    command: sh -c "npm install && npx hardhat node"
+    ports:
+      - "8545:8545"
+    networks:
+      - educhain
+
+  # MongoDB
+  mongo:
+    image: mongo:7
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+    networks:
+      - educhain
+    healthcheck:
+      test: echo 'db.runCommand("ping").ok' | mongosh --quiet
+      interval: 10s
+      retries: 5
+
+  # Backend API
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "3001:3001"
+    environment:
+      NODE_ENV: development
+      PORT: 3001
+      MONGODB_URI: mongodb://mongo:27017/educhain
+      RPC_URL: http://hardhat:8545
+      NETWORK: localhost
+      CONTRACT_ADDRESS: ${CONTRACT_ADDRESS}
+      BACKEND_PRIVATE_KEY: ${BACKEND_PRIVATE_KEY}
+      FRONTEND_URL: http://localhost:5173
+      ENABLE_SYNC: "true"
+    depends_on:
+      mongo:
+        condition: service_healthy
+    networks:
+      - educhain
+    restart: unless-stopped
+
+  # Frontend (for preview — use `npm run dev` locally for HMR)
+  frontend:
+    image: node:20-alpine
+    working_dir: /app
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    command: sh -c "npm install && npm run dev -- --host"
+    ports:
+      - "5173:5173"
+    environment:
+      VITE_CONTRACT_ADDRESS: ${CONTRACT_ADDRESS}
+      VITE_API_URL: http://localhost:3001
+    networks:
+      - educhain
+
+networks:
+  educhain:
+    driver: bridge
+
+volumes:
+  mongo_data:
