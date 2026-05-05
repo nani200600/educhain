@@ -153,38 +153,8 @@ EduChain moves academic credentials **on-chain** — making them:
 ---
 
 ## Project Structure
-educhain/
-├── blockchain/               # Smart contracts (Hardhat)
-│   ├── contracts/            # Main logic: AccessControl + Pausable
-│   ├── scripts/              # Deployment + Etherscan auto-verify
-│   ├── test/                 # 15 test cases (100% coverage)
-│   ├── deployments/          # Deployment artifacts (gitignored)
-│   └── hardhat.config.js     
-├── backend/                  # REST API (Express + MongoDB)
-│   ├── server.js             # Entry point
-│   ├── config/               # DB connections
-│   ├── src/
-│   │   ├── routes/           # Credentials, Institutions, Verification
-│   │   ├── models/           # MongoDB schemas (off-chain cache)
-│   │   ├── middleware/       # MetaMask auth & error handling
-│   │   └── utils/            # IPFS, Ethers wrapper, Event indexer
-│   ├── Dockerfile
-│   └── railway.json          # Backend deployment config
-├── frontend/                 # React application (Vite/CRA)
-│   ├── src/
-│   │   ├── pages/            # Home, Verify, Issue, Dashboard, Admin
-│   │   ├── components/       # Common UI & feature-specific modules
-│   │   ├── context/          # Wallet/MetaMask global state
-│   │   ├── hooks/            # useContract interaction logic
-│   │   └── utils/            # SEO & metadata management
-│   ├── public/
-│   ├── index.html            # SEO & Open Graph tags
-│   └── vercel.json           # Frontend deployment config
-├── docker-compose.yml        # Full local stack orchestration
-├── DEPLOY.md                 # Deployment guide
-└── README.md                 # Project documentation
 
-![EduChain Project Structure](blob:https://gemini.google.com/633b8944-137a-410a-b43f-ddaae492f079)
+
 ## Quick Start (macOS)
 
 ### Prerequisites
