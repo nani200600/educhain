@@ -184,6 +184,7 @@ educhain/
 ├── DEPLOY.md                 # Deployment guide
 └── README.md                 # Project documentation
 
+![EduChain Project Structure](blob:https://gemini.google.com/633b8944-137a-410a-b43f-ddaae492f079)
 ## Quick Start (macOS)
 
 ### Prerequisites
